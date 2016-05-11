@@ -25,7 +25,9 @@
 
 <!--Contenedor Principal que englobará al form-->
 <div class="container main-content" ng-controller="LoginFormController">
-    <form name="theform" ng-submit="onSubmit();">
+    <form name="theform" novalidate="novalidate"
+          ng-submit="onSubmit(theform.$valid);
+          ">
 
         <!--Input text nro 1-->
         <div class="form-group">
@@ -33,6 +35,7 @@
             <input type="text"
                    class="form-control"
                    id="name"
+                   required="required"
                    ng-model="formModel.name"
             >
         </div>
@@ -42,15 +45,22 @@
             <input type="password"
                    class="form-control"
                    id="password"
+                   required="required"
                    ng-model="formModel.password"
             >
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-class="
+        {
+        'has-error': !theform.email.$valid && (!theform.$pristine || theform.$submitted),
+        'has-success': theform.email.$valid && (!theform.$pristine || theform.$submitted)
+        }
+        ">
             <label form="name">Email</label>
             <input type="email"
                    class="form-control"
                    id="email"
+                   required="required"
                    ng-model="formModel.email"
             >
 
